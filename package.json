@@ -14,5 +14,10 @@
     "ejs": "^3.1.6",
     "express": "^4.17.2",
     "razorpay": "^2.8.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.8.0",
+    "eslint-config-prettier": "^8.3.0",
+    "prettier": "^2.5.1"
   }
 }

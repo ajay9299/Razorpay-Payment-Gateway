@@ -1,11 +1,11 @@
-const express = require("express");
-const Razorpay = require("razorpay");
-const dotenv = require("dotenv");
+const express = require('express');
+const Razorpay = require('razorpay');
+const dotenv = require('dotenv');
 const app = express();
 const port = process.env.PORT || 4040;
 
-app.set("views", "views");
-app.set("view engine", "ejs");
+app.set('views', 'views');
+app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
@@ -15,33 +15,33 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_SECRET_KEY,
 });
 
-app.get("/", async (req, res) => {
-  res.render("razorpay.ejs");
+app.get('/', async (req, res) => {
+  res.render('razorpay.ejs');
 });
 
-app.post("/order", async (req, res) => {
+app.post('/order', async (req, res) => {
   const options = {
     amount: 50000, // amount in the smallest currency unit
-    currency: "INR",
+    currency: 'INR',
   };
   const order = await razorpay.orders.create(options);
   if (!order) {
     res.status(400).json({
-      msg: "Something went wrong",
+      msg: 'Something went wrong',
     });
   }
 
   res.status(200).json(order);
 });
 
-app.post("/is-order-complete", async (req, res) => {
+app.post('/is-order-complete', async (req, res) => {
   const payment = await razorpay.payments.fetch(req.body.razorpay_payment_id);
-  if (!payment.status === "captured") {
+  if (!payment.status === 'captured') {
     res.status(400).json({
-      payment: "rejected",
+      payment: 'rejected',
     });
   }
-  res.status(200).render("razorpay.ejs");
+  res.status(200).render('razorpay.ejs');
 });
 
 app.listen(port, () => {
